@@ -25,9 +25,36 @@ Make sure you have the following installed:
    cd music-booking-api
    
 2. **Create a Virtual Environment**__
+    Create virtual environment and activate it
    ```bash
     python3 -m venv venv
     source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+
+3. **Install Dependencies**
+   Install the required dependencies
+   ```bash
+   pip install -r requirements.txt
+
+4. **Run migrations**
+   Apply database migrations
+   ```bash
+   python manage.py migrate
+
+5. **Seed genres**
+   Seed default music genres
+   ```bash
+   python manage.py shell
+   from user.seeder.genre import main
+   main()
+
+6. **Run the development server**
+   ```bash
+   python manage.py runserver
+   
+### API Documentation
+For detailed documentation and usage instruction, refer to the full [documentation](https://documenter.getpostman.com/view/34067711/2sB2cSfhky#7b9cf3ce-aa1d-4b6e-bf8f-01904b9a1d96)
+
+   
 
 
 
