@@ -1,4 +1,4 @@
-# Music Booking App
+# Music Booking Api
 
 Music booking api designed for event organizers to create events and invite artists. The app allows users to manage event details, artist availability, and artist bookings for events. It also provide endpoint for users to book an event
 
