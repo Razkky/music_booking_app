@@ -44,20 +44,24 @@ class Genre(models.Model):
 class Artists(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    stage_name = models.CharField(max_length=100, unique=True, null=True)
     genres = models.ManyToManyField(Genre, related_name="artists")
     price_per_hour = models.IntegerField(default=0)
     availability = models.BooleanField(default=True)
     social_links = models.JSONField(default=dict)
 
 
-    def update_price_per_hour(self, price):
-        self.price_per_hour = price if price else self.price_per_hour
+    def update_price_per_hour(self, new_price):
+        self.price_per_hour = new_price if new_price else self.price_per_hour
 
     def update_availability(self, availability):
         self.availability = availability if availability else self.availability
 
-    def update_genres(self, genres):
-        db_genre = Genre.objects.filter(name__in=genres)
+    def update_stage_name(self, new_stage_name):
+        self.stage_name = new_stage_name if new_stage_name else self.stage_name
+
+    def update_genres(self, new_genres):
+        db_genre = Genre.objects.filter(name__in=new_genres)
         self.genres.set(db_genre)
 
     def update_social_links(self, links):

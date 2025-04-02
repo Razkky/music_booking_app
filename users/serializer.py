@@ -1,5 +1,4 @@
 
-from music_booking_app.settings import SIMPLE_JWT
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
@@ -9,14 +8,13 @@ from users.models import User
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
-        token_life_time = SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"]
         data['user'] = UserSerializer(self.user).data
-        data["expiry_time"] = token_life_time
         return data
 
 
 class UserSerializer(serializers.Serializer):
 
+    id = serializers.IntegerField(read_only=True)
     password = serializers.CharField(write_only=True)
     first_name = serializers.CharField()
     last_name = serializers.CharField()
@@ -38,6 +36,7 @@ class UserSerializer(serializers.Serializer):
 class UpdateUserSerializer(serializers.Serializer):
     first_name = serializers.CharField(required=False)
     last_name = serializers.CharField(required=False)
+    stage_name = serializers.CharField(required=False)
     phone = serializers.CharField(required=False)
     availability = serializers.BooleanField(required=False, default=True)
     price_per_hour = serializers.IntegerField(required=False)
@@ -47,6 +46,7 @@ class UpdateUserSerializer(serializers.Serializer):
 
 class ArtistSerilizer(serializers.Serializer):
 
+    id = serializers.IntegerField()
     user = serializers.SerializerMethodField()
     genres = serializers.SerializerMethodField()
     price_per_hour = serializers.IntegerField()
@@ -60,6 +60,7 @@ class ArtistSerilizer(serializers.Serializer):
 
 class ArtistDetailSerializer(serializers.Serializer):
 
+    id = serializers.IntegerField()
     user = serializers.SerializerMethodField()
     genres = serializers.SerializerMethodField()
     price_per_hour = serializers.IntegerField()

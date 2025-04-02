@@ -33,7 +33,6 @@ def custom_exception_handler(exc, context):
         custom_response = CustomResponse(error=errors, status=response.status_code)
         response = custom_response
     elif isinstance(exc, Exception):
-        print(exc.__dict__)
         status_code = getattr(exc, 'status_code', status.HTTP_400_BAD_REQUEST)
         response = CustomResponse(error=str(exc), status=status_code)
 

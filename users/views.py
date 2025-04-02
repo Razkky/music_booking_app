@@ -47,8 +47,8 @@ class ListArtistsView(generics.GenericAPIView):
     serializer_class = ArtistSerilizer
 
     def get(self, request):
-        artits = ArtistService.get_all_artists()
-        return CustomResponse(data=self.serializer_class(artits, many=True).data)
+        artists = ArtistService.get_all_artists()
+        return CustomResponse(data=self.serializer_class(artists, many=True).data)
 
 class PreviewArtistView(generics.GenericAPIView):
 
