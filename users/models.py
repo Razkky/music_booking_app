@@ -32,8 +32,14 @@ class User(AbstractUser):
     def update_phone(self, phone):
         self.phone = phone if phone else self.phone
 
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
+
 class Genre(models.Model):
     name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return f'{self.name}'
 
 class Artists(models.Model):
 
@@ -56,3 +62,6 @@ class Artists(models.Model):
 
     def update_social_links(self, links):
         self.social_links.update(links)
+
+    def __str__(self):
+        return f'{self.user.username}'

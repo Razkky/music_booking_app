@@ -1,10 +1,9 @@
-#!/usr/bin/env python3
 
 from music_booking_app.settings import SIMPLE_JWT
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from users.models import Artists, User
+from users.models import User
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -24,7 +23,6 @@ class UserSerializer(serializers.Serializer):
     email = serializers.EmailField()
     phone = serializers.CharField(required=False)
     username = serializers.CharField()
-    artist = serializers.SerializerMethodField()
     is_artist = serializers.BooleanField(required=False, write_only=True)
 
     def validate_email(self, value):
@@ -36,11 +34,6 @@ class UserSerializer(serializers.Serializer):
         if User.objects.filter(username=value).exists():
             raise serializers.ValidationError("Username already exists")
         return value
-
-    def get_artist(self, obj):
-        artist = Artists.objects.filter(user=obj).first()
-        return ArtistSerilizer(artist).data if artist else ""
-
 
 class UpdateUserSerializer(serializers.Serializer):
     first_name = serializers.CharField(required=False)
@@ -54,6 +47,20 @@ class UpdateUserSerializer(serializers.Serializer):
 
 class ArtistSerilizer(serializers.Serializer):
 
+    user = serializers.SerializerMethodField()
+    genres = serializers.SerializerMethodField()
+    price_per_hour = serializers.IntegerField()
+    availability = serializers.BooleanField()
+
+    def get_genres(self, obj):
+        return [genre.name for genre in obj.genres.all()]
+
+    def get_user(self, obj):
+        return UserSerializer(obj.user).data
+
+class ArtistDetailSerializer(serializers.Serializer):
+
+    user = serializers.SerializerMethodField()
     genres = serializers.SerializerMethodField()
     price_per_hour = serializers.IntegerField()
     availability = serializers.BooleanField()
@@ -61,3 +68,6 @@ class ArtistSerilizer(serializers.Serializer):
 
     def get_genres(self, obj):
         return [genre.name for genre in obj.genres.all()]
+
+    def get_user(self, obj):
+        return UserSerializer(obj.user).data

@@ -57,13 +57,11 @@ class ArtistService:
 
     @staticmethod
     def get_all_artists():
-        return User.objects.filter(artists__isnull=False).select_related(
-            'artists').prefetch_related('artists__genres')
+        return Artists.objects.select_related('user').all()
 
     @staticmethod
     def get_artitst(id):
-        user = User.objects.filter(id=id).select_related(
-            'artists').prefetch_related('artists__genres').first()
-        if not user:
-            raise ObjectDoesNotExist("Artists not found")
-        return user
+        try:
+            return Artists.objects.select_related('user').get(id=id)
+        except Artists.DoesNotExist:
+            raise ObjectDoesNotExist(f"Artists not found with this id {id}")

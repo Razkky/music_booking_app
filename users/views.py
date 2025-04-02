@@ -3,7 +3,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from utils.response import CustomResponse
 
-from users.serializer import (CustomTokenObtainPairSerializer,
+from users.serializer import (ArtistDetailSerializer, ArtistSerilizer,
+                              CustomTokenObtainPairSerializer,
                               UpdateUserSerializer, UserSerializer)
 from users.service import ArtistService, UserService
 
@@ -43,7 +44,7 @@ class UpdateUserView(generics.GenericAPIView):
 
 class ListArtistsView(generics.GenericAPIView):
 
-    serializer_class = UserSerializer
+    serializer_class = ArtistSerilizer
 
     def get(self, request):
         artits = ArtistService.get_all_artists()
@@ -51,7 +52,7 @@ class ListArtistsView(generics.GenericAPIView):
 
 class PreviewArtistView(generics.GenericAPIView):
 
-    serializer_class = UserSerializer
+    serializer_class = ArtistDetailSerializer
 
     def get(self, request, id=None):
         artist = ArtistService.get_artitst(id)
