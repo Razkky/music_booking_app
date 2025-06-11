@@ -52,7 +52,7 @@ Make sure you have the following installed:
    python manage.py runserver
    
 ### API Documentation
-For detailed documentation and usage instruction, refer to the full [documentation](https://documenter.getpostman.com/view/34067711/2sB2cSfhky#7b9cf3ce-aa1d-4b6e-bf8f-01904b9a1d96)
+For detailed documentation and usage instruction, refer to the full [documentation](https://documenter.getpostman.com/view/34067711/2sB2x5HCdc)
 
    
 

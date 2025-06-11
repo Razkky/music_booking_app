@@ -14,8 +14,10 @@ class EventService:
 
 
     @staticmethod
-    def update_event(event_id, **event_data):
+    def update_event(event_id, user, **event_data):
         event: Event = EventService.get_event_by_id(event_id)
+        if event.organizer != user:
+            raise ObjectDoesNotExist(f'Event not found for this {event_id}')
         EventService._update_event_data(event, **event_data)
         return event
 

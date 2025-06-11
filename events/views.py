@@ -26,7 +26,7 @@ class UpdateEventView(generics.GenericAPIView):
     def put(self, request, id):
         serialized_data = self.serializer_class(data=request.data)
         serialized_data.is_valid(raise_exception=True)
-        event = EventService.update_event(id, **serialized_data.validated_data)
+        event = EventService.update_event(id, request.user, **serialized_data.validated_data)
         return CustomResponse(data=EventSerializer(event).data)
 
 class ListEventView(generics.GenericAPIView):
